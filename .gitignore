@@ -1,0 +1,33 @@
+# Global ignores for this monorepo
+# OS/IDE
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+*.swp
+.vscode/
+.idea/
+
+# Node
+node_modules/
+**/node_modules/
+
+# Builds
+**/dist/
+**/build/
+
+# Coverage
+**/coverage/
+
+# Environment files
+.env
+.env.*
+frontend/.env*
+my-backend/.env*
+
+# Local databases and generated files
+my-backend/sql_app.db
+
+# Misc
+pnpm-debug.log*
+.nyc_output/
