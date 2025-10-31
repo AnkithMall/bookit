@@ -23,7 +23,7 @@ const Header = ({
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-2 pl-4">
           <img
-            src="/src/assets/company-icon.svg"
+            src="/company-icon.svg"
             alt="Company Logo"
             className=""
           />
