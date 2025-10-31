@@ -50,22 +50,26 @@ async function bootstrap() {
 
   const document = SwaggerModule.createDocument(app, config);
   
-  // Configure Swagger UI with CDN for production
+  // Configure Swagger UI with default header style
   const swaggerOptions = {
-    customCss: `
-      .swagger-ui .topbar { display: none }
-      .swagger-ui .info .title { color: #333; font-size: 24px; margin: 0 0 20px; }
-    `,
-    customSiteTitle: 'BookIt API Docs',
+    customSiteTitle: 'BookIt API Documentation',
     customfavIcon: 'https://bookit-eight-theta.vercel.app/favicon.ico',
-    customJs: [
-      'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.10.3/swagger-ui-bundle.min.js',
-      'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.10.3/swagger-ui-standalone-preset.min.js'
-    ],
-    customCssUrl: [
-      'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.10.3/swagger-ui.min.css',
-      'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.10.3/swagger-ui.css'
-    ]
+    swaggerOptions: {
+      docExpansion: 'list',
+      filter: true,
+      showRequestDuration: true,
+    },
+    customCss: `
+      .swagger-ui .topbar { 
+        background-color: #1e293b;
+        padding: 10px 0;
+      }
+      .swagger-ui .info .title { 
+        color: #333; 
+        font-size: 24px; 
+        margin: 0 0 20px; 
+      }
+    `
   };
 
   SwaggerModule.setup('docs', app, document, swaggerOptions);
