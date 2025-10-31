@@ -43,9 +43,32 @@ async function bootstrap() {
     .setTitle('Highway Delite API')
     .setDescription('API documentation for the Highway Delite backend')
     .setVersion('1.0.0')
+    .addServer(process.env.NODE_ENV === 'production' 
+      ? 'https://bookit-backend-bay.vercel.app' 
+      : 'http://localhost:3000')
     .build();
+
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('docs', app, document);
+  
+  // Configure Swagger UI with CDN for production
+  const swaggerOptions = {
+    customCss: `
+      .swagger-ui .topbar { display: none }
+      .swagger-ui .info .title { color: #333; font-size: 24px; margin: 0 0 20px; }
+    `,
+    customSiteTitle: 'BookIt API Docs',
+    customfavIcon: 'https://bookit-eight-theta.vercel.app/favicon.ico',
+    customJs: [
+      'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.10.3/swagger-ui-bundle.min.js',
+      'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.10.3/swagger-ui-standalone-preset.min.js'
+    ],
+    customCssUrl: [
+      'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.10.3/swagger-ui.min.css',
+      'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.10.3/swagger-ui.css'
+    ]
+  };
+
+  SwaggerModule.setup('docs', app, document, swaggerOptions);
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();
