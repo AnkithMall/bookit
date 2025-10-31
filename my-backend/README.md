@@ -53,7 +53,7 @@ NestJS backend for Highway Delite. Provides APIs for managing experiences, slots
 ## Project Structure
 
 ```bash
-my-backend/
+backend/
   src/
     app.module.ts
     main.ts
@@ -106,7 +106,7 @@ my-backend/
   ```
 
 - **Environment variables**
-  Create `.env` in `my-backend/` (or use `.env.example` as reference):
+  Create `.env` in `backend/` (or use `.env.example` as reference):
   - `PORT` (optional, default 3000)
   - `DATABASE_URL` (optional; if set, Postgres is used; otherwise SQLite file `sql_app.db`)
   - CORS origin is set to `http://localhost:5173` in `main.ts` (update if needed)
@@ -262,14 +262,9 @@ erDiagram
 
 ```mermaid
 flowchart LR
-  User((User))
-  FE[Frontend (React/Vite)]
-  BE[NestJS Backend]
-  DB[(SQLite / PostgreSQL)]
-
-  User --> FE
-  FE -->|HTTP/JSON| BE
-  BE -->|TypeORM| DB
+  User((User)) --> FE[Frontend (React/Vite)]
+  FE -->|HTTP/JSON| BE[NestJS Backend]
+  BE -->|TypeORM| DB[(SQLite / PostgreSQL)]
 ```
 
 ### Deployment Diagram
@@ -336,8 +331,8 @@ pnpm run test:cov
 ### Coverage reports
 
 - Text summary shown in terminal.
-- HTML report: `my-backend/coverage/lcov-report/index.html`
-- LCOV file: `my-backend/coverage/lcov.info`
+- HTML report: `backend/coverage/lcov-report/index.html`
+- LCOV file: `backend/coverage/lcov.info`
 
 ### Coverage thresholds
 

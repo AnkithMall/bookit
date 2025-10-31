@@ -28,13 +28,13 @@ Swagger Docs: [Backend /docs](https://bookit-backend-bay.vercel.app/docs)
 
 # install deps
  pnpm install --filter frontend
- pnpm install --filter my-backend
+ pnpm install --filter backend
 ```
 
 ### Run locally
 ```bash
 # backend (in another terminal)
- pnpm --filter my-backend run start:dev
+ pnpm --filter backend run start:dev
 # frontend
  pnpm --filter frontend run dev
 ```
@@ -60,79 +60,6 @@ Swagger Docs: [Backend /docs](https://bookit-backend-bay.vercel.app/docs)
 
 ---
 
-## Architecture
-
-### High-level
-```mermaid
-flowchart LR
-  FE[Frontend (React/Vite)] -->|HTTP/JSON| BE[NestJS Backend]
-  BE -->|TypeORM| DB[(SQLite / PostgreSQL)]
-  Devs[[Developers]] --> FE & BE
-```
-
-### Backend modules
-```mermaid
-flowchart LR
-  A[AppModule]
-  A --> E[ExperiencesModule]
-  A --> S[SlotsModule]
-  A --> B[BookingsModule]
-  A --> P[PromoModule]
-  E --> E1[ExperiencesController]
-  E --> E2[ExperiencesService]
-  S --> S1[SlotsController]
-  S --> S2[SlotsService]
-  B --> B1[BookingsController]
-  B --> B2[BookingsService]
-  P --> P1[PromoController]
-  P --> P2[PromoService]
-```
-
-### Data Model (ERD)
-```mermaid
-erDiagram
-  EXPERIENCES ||--o{ SLOTS : has
-  SLOTS ||--o{ BOOKINGS : has
-
-  EXPERIENCES {
-    int id PK
-    string name
-    string location
-    string description
-    float price
-    string image
-    string about
-    int capacity
-  }
-
-  SLOTS {
-    int id PK
-    string start_time
-    string end_time
-    boolean is_booked
-    int capacity
-    int experience_id FK
-  }
-
-  BOOKINGS {
-    int id PK
-    string user_name
-    string user_email
-    int slot_id FK
-  }
-```
-
----
-
-## Workflow
-1. User opens the FE, loads experiences from BE.
-2. On Details, user selects a slot and proceeds to Checkout.
-3. On Checkout, user can apply a promo code; BE validates eligibility and returns discount.
-4. User confirms booking; BE enforces slot and experience capacity and creates the booking.
-5. Success page shown.
-
----
-
 ## Backend
 - NestJS 11 + TypeORM
 - DB config:
@@ -143,18 +70,13 @@ erDiagram
 - Validation: Global `ValidationPipe` with class-validator DTOs.
 - Swagger: `/docs`
 
-### Run
-```bash
-pnpm --filter my-backend run start:dev
-```
-
 ### Tests & Coverage
 ```bash
-pnpm --filter my-backend run test       # unit
-pnpm --filter my-backend run test:e2e   # e2e
-pnpm --filter my-backend run test:cov   # coverage (text + HTML + lcov)
+pnpm --filter backend run test      # unit
+pnpm --filter backend run test:e2e   # e2e
+pnpm --filter backend run test:cov   # coverage (text + HTML + lcov)
 ```
-Coverage HTML: `my-backend/coverage/lcov-report/index.html`
+Coverage HTML: `backend/coverage/lcov-report/index.html`
 
 Recent snapshot: Statements ~57.7%, Branches ~66.4%, Functions ~66.0%, Lines ~57.6%
 
@@ -166,17 +88,12 @@ Recent snapshot: Statements ~57.7%, Branches ~66.4%, Functions ~66.0%, Lines ~57
 - Central `Spinner` component for page and in-button loading
 - INR currency display (₹)
 
-### Run
-```bash
-pnpm --filter frontend run dev
-```
-
 ---
 
 ## Deployment
-- Frontend: [TBD — Deployed Frontend URL]
-- Backend: [TBD — Deployed Backend Base URL]
-- Swagger: [TBD — Deployed Swagger Docs URL]
+- Frontend: [https://bookit-eight-theta.vercel.app/](https://bookit-eight-theta.vercel.app/)
+- Backend: [https://bookit-backend-bay.vercel.app/](https://bookit-backend-bay.vercel.app/)
+- Swagger: [https://bookit-backend-bay.vercel.app/docs](https://bookit-backend-bay.vercel.app/docs)
 
 > Add env vars for production builds accordingly. For backend, use migrations in production and disable `synchronize`.
 
