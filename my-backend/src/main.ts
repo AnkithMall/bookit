@@ -16,8 +16,27 @@ async function bootstrap() {
       transform: true,
     }),
   );
+  const corsEnv = process.env.CORS_ORIGIN;
+  const origins = corsEnv
+    ? corsEnv.split(',').map((s) => s.trim()).filter(Boolean)
+    : ['http://localhost:5173'];
   app.enableCors({
-    origin: 'http://localhost:5173',
+    origin: (origin, callback) => {
+      // Allow requests with no origin (like mobile apps or curl requests)
+      if (!origin) return callback(null, true);
+
+      // Allow access to Swagger UI from any origin
+      if (origin.includes('swagger') || origin.includes('docs')) {
+        return callback(null, true);
+      }
+
+      // Check against allowed origins for API routes
+      if (origins.includes(origin)) {
+        return callback(null, true);
+      }
+
+      return callback(new Error('Not allowed by CORS'));
+    }
   });
 
   const config = new DocumentBuilder()
