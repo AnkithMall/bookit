@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Search, Menu, X } from "lucide-react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
-
+import companyIcon from '../assets/company-icon.svg';
 interface HeaderProps {
   searchQuery: string;
   setSearchQuery: (query: string) => void;
@@ -23,7 +23,7 @@ const Header = ({
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-2 pl-4">
           <img
-            src="/company-icon.svg"
+            src={companyIcon}
             alt="Company Logo"
             className=""
           />
