@@ -161,7 +161,7 @@ Base URL: `http://localhost:${PORT || 3000}`
   - NestJS default logger is enabled; you will see app/module/route init logs.
 
 - **Silence SQL logs**
-  - TypeORM SQL logging is disabled by default.
+  - TypeORM SQL logging is disabled default.
   - To enable temporarily: set env `TYPEORM_LOGGING=true` before `pnpm run start:dev`.
 
 ## API Endpoints
@@ -260,30 +260,34 @@ erDiagram
 
 ### System Context
 
+The following diagram shows the high‑level interaction between the user, the frontend, the NestJS backend and the database.  Simplified node labels avoid characters that can confuse the Mermaid parser.
+
 ```mermaid
 flowchart LR
-  User((User)) --> FE[Frontend (React/Vite)]
-  FE -->|HTTP/JSON| BE[NestJS Backend]
-  BE -->|TypeORM| DB[(SQLite / PostgreSQL)]
+    User((User)) --> FE[Frontend]
+    FE -->|HTTP/JSON| BE[Backend]
+    BE -->|TypeORM| DB[(Database)]
 ```
 
 ### Deployment Diagram
 
+The deployment diagram illustrates where each component runs.  Again, node labels are kept simple to ensure Mermaid renders correctly.
+
 ```mermaid
 flowchart TD
-  subgraph Client
-    Browser[Web Browser]
-  end
+    subgraph Client
+        Browser[Browser]
+    end
 
-  subgraph Hosting
-    FE[Static Frontend (Vite build)]
-    BE[NestJS App]
-    DB[(SQLite file / Postgres instance)]
-  end
+    subgraph Hosting
+        FE[Frontend]
+        BE[Backend]
+        DB[(Database)]
+    end
 
-  Browser --> FE
-  FE -->|API calls| BE
-  BE --> DB
+    Browser --> FE
+    FE -->|API calls| BE
+    BE --> DB
 ```
 
 ## Request Workflow
@@ -359,10 +363,10 @@ Global minimum thresholds are enforced via Jest config in `package.json`:
 All files  | 57.68% Statements | 66.42% Branches | 66.03% Functions | 57.63% Lines
 
 Modules highlights
-- bookings: ~81%+
-- experiences: ~83%+
-- promo: ~79%+
-- slots: ~77%+ (service + controller tests added)
+-- bookings: ~81%+
+-- experiences: ~83%+
+-- promo: ~79%+
+-- slots: ~77%+ (service + controller tests added)
 ```
 
 ## Future Improvements
@@ -370,7 +374,5 @@ Modules highlights
 - Add DTO validation pipes and class-validator rules
 - Replace `synchronize: true` with migrations for prod safety
 - Add pagination and filtering for list endpoints
-- Introduce Swagger (`@nestjs/swagger`) for live API docs
 - Implement authentication/authorization if needed
-- Configure CORS via env and per-environment settings
 - Add request logging and structured logger
